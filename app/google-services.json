@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "263909920020",
+    "firebase_url": "https://fir-cloud-8fc05.firebaseio.com",
+    "project_id": "fir-cloud-8fc05",
+    "storage_bucket": "fir-cloud-8fc05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263909920020:android:10fef1b38bfd2548",
+        "android_client_info": {
+          "package_name": "com.github.faisal.firebasecloudfunctions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263909920020-9ut6bm79cjtmbqr5d6actpboic3i1ho9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZTKGyNUjvAmH1BQmOsl0xSXijqIgJvd8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
