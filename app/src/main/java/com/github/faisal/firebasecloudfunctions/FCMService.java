@@ -52,13 +52,13 @@ public class FCMService extends FirebaseMessagingService {
         }
 
         Intent intent = new Intent(getApplicationContext(), CustomNotificationActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         intent.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
                 WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON +
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        getApplicationContext().startActivity(intent);
+        startActivity(intent);
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.

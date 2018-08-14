@@ -19,6 +19,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0 '
@@ -28,8 +29,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
-    implementation 'com.twilio:voice-android:2.0.8'
-    implementation 'com.koushikdutta.ion:ion:2.1.8'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     androidTestImplementation 'junit:junit:4.12'
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'

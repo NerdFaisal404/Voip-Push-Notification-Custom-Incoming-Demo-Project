@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         mClient = new OkHttpClient();
 
-        String refreshedToken = "ezqKcosAWbY:APA91bEN5-3FNypgqbnreRKWrKVTg_K0oY1V8cXzAr7-pNVkhb_-mibogo5V13SbXJRss4mBTPHf9I0O_k3nHeuSMxAnV1mGV6sizzZ3zjJJ8AYUvaBet2oNglLo_gqDo0_5gCZk9eAPoX31kWCtw9ct6ABfa8ZMHA";
+        String refreshedToken = "f4XxYky3uuY:APA91bGbO2vvnlAudO0K0Dhh96DhJXdLwezODegNBRMGdV1bHvfT1hCFz7ryPBpV5SBX3jLYWGEBrl442nH95JeS4KXYVR5hh_NW6qQmO7KvpGS_cQmbp0Hthi4JMlhIUHN2zt9W_WUqpIvAtADcT-0myUOh_7xVHA";
 
         jsonArray = new JSONArray();
         jsonArray.put(refreshedToken);

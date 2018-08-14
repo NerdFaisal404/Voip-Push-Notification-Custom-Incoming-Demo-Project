@@ -4,28 +4,25 @@ import android.Manifest;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.skyfishjy.library.RippleBackground;
 
 public class CustomNotificationActivity extends AppCompatActivity {
     private int MIC_PERMISSION_REQUEST_CODE = 1;
     private KeyguardManager.KeyguardLock lock;
     private PowerManager.WakeLock wakeLock;
     private AudioManager audioManager;
-    private int savedAudioMode = AudioManager.MODE_INVALID;
     private SoundPoolManager soundPoolManager;
+    RippleBackground rippleBackground;
 
     @Override
     public void onAttachedToWindow() {
@@ -35,7 +32,9 @@ public class CustomNotificationActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("faisald", "Test code");
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_custom_notification);
         PowerManager pwm = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = pwm.newWakeLock(PowerManager.FULL_WAKE_LOCK, getClass().getSimpleName());
         wakeLock.acquire();
@@ -47,15 +46,14 @@ public class CustomNotificationActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_custom_notification);
+
         soundPoolManager = SoundPoolManager.getInstance(this);
         /*
          * Needed for setting/abandoning audio focus during a call
          */
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.setSpeakerphoneOn(true);
-
+        rippleBackground=(RippleBackground)findViewById(R.id.content);
         /*
          * Enable changing the volume using the up/down keys during a conversation
          */
@@ -70,13 +68,16 @@ public class CustomNotificationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         soundPoolManager.playRinging();
+        rippleBackground.startRippleAnimation();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        wakeLock.release();
+        if (wakeLock.isHeld())
+            wakeLock.release();
         lock.reenableKeyguard();
+        rippleBackground.stopRippleAnimation();
     }
 
 
