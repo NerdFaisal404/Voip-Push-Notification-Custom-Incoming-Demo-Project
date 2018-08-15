@@ -5,9 +5,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -25,38 +28,37 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
-    EditText title, message;
-    OkHttpClient mClient;
-    JSONArray jsonArray;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private OkHttpClient mClient;
+    private TextView tvMyToken;
+    private Button btnCalll;
+    private EditText edtUserToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        tvMyToken = findViewById(R.id.textVIew_myToken);
+        edtUserToken = findViewById(R.id.edt_token);
+        btnCalll = findViewById(R.id.btn_call);
+        btnCalll.setOnClickListener(this);
         String token = FirebaseInstanceId.getInstance().getToken();
-
-        Log.d("token_id", token);
+        if (!TextUtils.isEmpty(token)) {
+            tvMyToken.setTextIsSelectable(true);
+            tvMyToken.setText(token);
+            Log.d("token_id", token);
+        }
 
         mClient = new OkHttpClient();
 
-        String refreshedToken = "f4XxYky3uuY:APA91bGbO2vvnlAudO0K0Dhh96DhJXdLwezODegNBRMGdV1bHvfT1hCFz7ryPBpV5SBX3jLYWGEBrl442nH95JeS4KXYVR5hh_NW6qQmO7KvpGS_cQmbp0Hthi4JMlhIUHN2zt9W_WUqpIvAtADcT-0myUOh_7xVHA";
-
-        jsonArray = new JSONArray();
-        jsonArray.put(refreshedToken);
-
 
     }
 
 
-    public void sendCall(View view) {
-        sendMessage(jsonArray,"Hello","How r u","Http:\\google.com","My Name is Faisal");
-    }
 
 
     @SuppressLint("StaticFieldLeak")
-    public void sendMessage(final JSONArray recipients, final String title, final String body, final String icon, final String message) {
+    public void sendMessage(final JSONArray userTokenID, final String title, final String body, final String icon, final String message) {
 
         new AsyncTask<String, String, String>() {
             @Override
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     data.put("message", message);
                     root.put("data", notification);
                     root.put("data", data);
-                    root.put("registration_ids", recipients);
+                    root.put("registration_ids", userTokenID);
 
                     String result = postToFCM(root.toString());
                     Log.d("Main Activity", "Result: " + result);
@@ -114,4 +116,15 @@ public class MainActivity extends AppCompatActivity {
         return response.body().string();
     }
 
+    @Override
+    public void onClick(View view) {
+        String userToken = edtUserToken.getText().toString();
+        String imageUrl = "https://cdn.iconscout.com/icon/premium/png-256-thumb/notification-142-647836.png";
+        if (!TextUtils.isEmpty(userToken)){
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(userToken);
+            sendMessage(jsonArray, "Hello", "How r u", imageUrl, "My Name is Faisal");
+        }
+
+    }
 }

@@ -14,15 +14,9 @@ import android.view.WindowManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-/**
- * Created by Chizoba on 3/20/2017.
- */
-
 public class FCMService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
 
-
-    @SuppressLint("WrongConstant")
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // There are two types of messages data messages and notification messages. Data messages are handled
