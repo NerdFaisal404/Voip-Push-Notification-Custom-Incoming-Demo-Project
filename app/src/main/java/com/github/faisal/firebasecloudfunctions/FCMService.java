@@ -17,6 +17,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class FCMService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // There are two types of messages data messages and notification messages. Data messages are handled
@@ -46,6 +47,7 @@ public class FCMService extends FirebaseMessagingService {
         }
 
         Intent intent = new Intent(getApplicationContext(), CustomNotificationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         intent.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +

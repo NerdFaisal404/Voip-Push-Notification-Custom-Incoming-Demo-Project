@@ -29,7 +29,7 @@
         </service>
 
         <activity android:name=".CustomNotificationActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionbar"/>
     </application>
 
