@@ -2,4 +2,5 @@
     <string name="app_name">Voip Incoming Call Demo</string>
     <string name="callee">client identity or phone number</string>
     <string name="callHint">Dial a client name or phone number. Leaving the field empty results in an automated response.</string>
+    <string name="key_value">dFndLKOJNC4:APA91bEg9RE9w0NwhAzq5Y47aNDYOE4tTGwzlYj1uCfyf-WMwkqAf9l4DaNyzkwSInQvWhbSw1Dxin75XqWyFcOuu_ed0mB1TFZxY-JPo26uvRZ5ofCjBr1WbLK7vs6LnU2AGln_Cn8v</string>
 </resources>

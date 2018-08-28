@@ -32,10 +32,12 @@ public class FCMService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
+
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("message"));
-            dataTitle = remoteMessage.getData().get("title");
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("message")
+                    + remoteMessage.getData().get("title_message"));
+            dataTitle = remoteMessage.getData().get("title_message");
             dataMessage = remoteMessage.getData().get("message");
         }
 
@@ -62,9 +64,6 @@ public class FCMService extends FirebaseMessagingService {
     }
 
 
-
-
-
     //  Create and show a simple notification containing the received FCM messages
     private void sendNotification(String notificationTitle, String notificationBody, String dataTitle, String dataMessage) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -77,8 +76,8 @@ public class FCMService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(notificationTitle)
-                .setContentText(notificationBody)
+                .setContentTitle(dataTitle)
+                .setContentText(dataMessage)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -89,4 +88,8 @@ public class FCMService extends FirebaseMessagingService {
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Log.e("ClearFromRecentService", "END");
+    }
 }

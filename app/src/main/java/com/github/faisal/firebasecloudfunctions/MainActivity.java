@@ -1,7 +1,13 @@
 package com.github.faisal.firebasecloudfunctions;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         edtUserToken = findViewById(R.id.edt_token);
         btnCalll = findViewById(R.id.btn_call);
         btnCalll.setOnClickListener(this);
+        checkDozeMode();
         String token = FirebaseInstanceId.getInstance().getToken();
         if (!TextUtils.isEmpty(token)) {
             tvMyToken.setTextIsSelectable(true);
@@ -54,7 +61,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void checkDozeMode() {
+        Intent intent = new Intent();
+        String packageName = getPackageName();
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (pm.isIgnoringBatteryOptimizations(packageName))
+                intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            else {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+            }
+            startActivity(intent);
+        }
 
+    }
 
 
     @SuppressLint("StaticFieldLeak")
@@ -70,10 +91,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     notification.put("title", title);
                     notification.put("icon", icon);
 
+                    JSONObject priorityObject = new JSONObject();
+                    priorityObject.put("priority", "high");
+
                     JSONObject data = new JSONObject();
                     data.put("message", message);
+                    data.put("title_message", title);
                     root.put("data", notification);
                     root.put("data", data);
+                    root.put("android", priorityObject);
                     root.put("registration_ids", userTokenID);
 
                     String result = postToFCM(root.toString());
@@ -120,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         String userToken = edtUserToken.getText().toString();
         String imageUrl = "https://cdn.iconscout.com/icon/premium/png-256-thumb/notification-142-647836.png";
-        if (!TextUtils.isEmpty(userToken)){
+        if (!TextUtils.isEmpty(userToken)) {
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(userToken);
-            sendMessage(jsonArray, "Hello", "How r u", imageUrl, "My Name is Faisal");
+            sendMessage(jsonArray, "Hello", "How r u", imageUrl, "Incoming call...");
         }
 
     }
