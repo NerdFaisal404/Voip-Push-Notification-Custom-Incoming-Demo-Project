@@ -92,4 +92,9 @@ public class FCMService extends FirebaseMessagingService {
     public void onTaskRemoved(Intent rootIntent) {
         Log.e("ClearFromRecentService", "END");
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }
